@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Flight</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+<body>
+    <div id="specificSearch">
+        <input type="text" id="flightNum" placeholder="Flight Number (e.g. IGO 178)">
+        <button id="srch">Search</button>
+    </div>
+    <div id="loader" hidden></div>
+    <p id="error"></p>
+    <div id="container">
+        <div id="header">
+            <div id="flight">
+                <h1 id="serial">UA2402</h1>
+                <h3 id="airlineName">United Airlines (UA)</h3>
+            </div>
+            <div id="fromToIcon">
+                <div id="depAir">
+                    <h1 id="deptCode">PAT</h1>
+                    <h3 id="deptName">Jay Prakash</h3>
+                </div>
+                <img src="https://www.freeiconspng.com/uploads/plane-icon--iconshow-14.png">
+                <div id="arrAir">
+                    <h1 id="arrCode">PAT</h1>
+                    <h3 id="arrName">Jay Prakash</h3>
+                </div>
+            </div>
+            <div id="status">
+                <h1 id="airStat">Airborne</h1>
+                <h3 id="statDesc">On Time</h3>
+            </div>
+        </div>
+        <div id="details">
+            <div id="from">
+                <div class="depArr"><p>Departure</p></div>
+                <div id="airportDet">
+                    <p id="airName">Jay Prakash Narayan International</p>
+                    <p id="icao">IATA: LAX ● ICAO: KLAX</p>
+                </div>
+
+                <div>
+                    <div id="schedule">
+                        <div>
+                            <span>Scheduled</span><br>
+                            <span id="schTime"></span>
+                        </div>
+                        <div>
+                            <span>Estimated</span><br>
+                            <span id="estTime"></span>
+                        </div>
+                    </div>
+                    <div id="schedule">
+                        <div>
+                            <span>Actual</span><br>
+                            <span id="actTime"></span>
+                        </div>
+                        <div>
+                            <span>Runway</span><br>
+                            <span id="runTime"></span>
+                        </div>
+                    </div>
+                    <div id="terGate">
+                        <div><p id="term">Terminal</p></div>
+                        <div><p id="gate">Gate</p></div>
+                    </div>
+                </div>
+            </div>
+            <div id="to">
+                <div class="depArr"><p>Arrival</p></div>
+                <div id="airportDet2">
+                    <p id="airName2">Jay Prakash Narayan International</p>
+                    <p id="icao2">IATA: LAX ● ICAO: KLAX</p>
+                </div>
+
+                <div>
+                    <div id="schedule">
+                        <div>
+                            <span>Scheduled</span><br>
+                            <span id="schTime2"></span>
+                        </div>
+                        <div>
+                            <span>Estimated</span><br>
+                            <span id="estTime2"></span>
+                        </div>
+                    </div>
+                    <div id="schedule">
+                        <div>
+                            <span>Actual</span><br>
+                            <span id="actTime2"></span>
+                        </div>
+                        <div>
+                            <span>Runway</span><br>
+                            <span id="runTime2"></span>   
+                        </div>
+                    </div>
+                </div>
+                <div id="terGate">
+                    <div><p id="term2">Terminal</p></div>
+                    <div><p id="gate2">Gate</p></div>
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div id="footer">
+            <p id="departTimeZone">Departure Timezone: </p>
+            <p id="arrTimeZone">● Arrival Timezone: </p>
+        </div>
+    </div>
+
+    <button id="mapShow" hidden>Show on Map</button>
+    <div id="map" style="width: 50%; height: 400px;" hidden></div>
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</body>
+</html>

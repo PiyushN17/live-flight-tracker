@@ -1,0 +1,301 @@
+body {
+    color: #333536;
+    font-family: "Open Sans", Arial, sans-serif;
+    margin: 0;
+}
+
+#loader {
+    width: 36px;
+    height: 36px;
+    border: 4px solid #ddd;
+    border-top: 4px solid #333;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 30px auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#specificSearch {
+    width: 90%;
+    max-width: 500px;
+    margin: 20px auto;
+    display: flex;
+    gap: 10px;
+}
+
+#specificSearch input {
+    flex: 1;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#specificSearch button {
+    padding: 10px 14px;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#specificSearch button:hover {
+    background: #218838;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+#container {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    border: 1px solid #ecedf1;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    background: #ecedf1;
+    min-height: 80px;
+    flex-wrap: wrap;
+    padding: 10px 0;
+}
+
+#flight, #fromToIcon, #status {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#flight h1 {
+    margin: 0;
+    font-size: 1.4em;
+}
+
+#flight h3 {
+    margin: 2px 0 0;
+    font-size: 0.9em;
+    font-weight: normal;
+}
+
+#fromToIcon {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+}
+
+#depAir, #arrAir {
+    text-align: center;
+}
+
+#depAir h1, #arrAir h1 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+#depAir h3, #arrAir h3 {
+    margin: 2px 0 0;
+    font-size: 0.85em;
+    font-weight: normal;
+}
+
+#fromToIcon img {
+    width: 26px;
+    transform: rotate(90deg);
+}
+
+#status {
+    background: #28a745;
+    color: #fff;
+    padding: 10px 14px;
+    min-width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#status h1 {
+    margin: 0;
+    font-size: 1.05em;
+}
+
+#status h3 {
+    margin: 2px 0 0;
+    font-size: 0.8em;
+    font-weight: normal;
+}
+
+#details {
+    display: flex;
+    flex: 1;
+    border-top: 1px solid #ecedf1;
+    border-bottom: 1px solid #ecedf1;
+}
+
+#from, #to {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#from {
+    border-right: 1px solid #ecedf1;
+}
+
+.depArr {
+    background: #ecedf1;
+    padding: 3px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 20px;
+    align-self: center;
+    margin-bottom: 10px;
+}
+
+#airportDet, #airportDet2 {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+#airportDet p, #airportDet2 p {
+    margin: 2px 0;
+    font-size: 0.9em;
+}
+
+#schedule {
+    display: flex;
+    margin-bottom: 6px;
+}
+
+#schedule div {
+    flex: 1;
+    background: #f7f7f7;
+    border: 1px solid #ecedf1;
+    text-align: center;
+    padding: 6px 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+#schedule div span:last-child {
+    display: block;
+    font-weight: normal;
+    margin-top: 2px;
+}
+
+#terGate {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+#terGate div {
+    background: #ecedf1;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+#footer {
+    background: #ecedf1;
+    padding: 8px 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    font-size: 0.85em;
+    font-weight: 600;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+#mapShow {
+    display: block;
+    margin: 15px auto;
+    padding: 10px 20px;
+    background: #007bff;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+#mapShow:hover {
+    background: #0056b3;
+}
+
+#map {
+    width: 90%;
+    max-width: 900px;
+    height: 400px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+@media (max-width: 768px) {
+    #header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #fromToIcon {
+        margin: 6px 0;
+    }
+
+    #status {
+        align-items: center;
+        text-align: center;
+    }
+
+    #details {
+        flex-direction: column;
+    }
+
+    #from {
+        border-right: none;
+        border-bottom: 1px solid #ecedf1;
+    }
+}
+
+@media (max-width: 480px) {
+    #flight h1 {
+        font-size: 1.2em;
+    }
+
+    #depAir h1, #arrAir h1 {
+        font-size: 1em;
+    }
+
+    #status h1 {
+        font-size: 1em;
+    }
+
+    #map {
+        width: 95%;
+        height: 300px;
+    }
+
+    #mapShow {
+        width: 90%;
+        padding: 8px 0;
+    }
+}
