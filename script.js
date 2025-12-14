@@ -42,7 +42,7 @@ container.style.display = 'none';
 
 srch.addEventListener('click', function() {
     if(flightNum.value === '') {
-        error.innerText = 'Please enter a valid flight number';
+        error.innerText = 'Enter a valid Flight Number';
         map.hidden = true;
         mapShow.hidden = true;
         return;
@@ -68,7 +68,9 @@ async function flightDetails(API_URL) {
         }
 
         if (!response.data || response.data.length === 0) {
-            error.innerText = 'Enter valid flight number!';
+            error.innerText = 'Enter a valid Flight Number';
+            map.hidden = true;
+            mapShow.hidden = true;
             container.style.display = 'none';
             return;
         }
