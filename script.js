@@ -43,9 +43,10 @@ container.style.display = 'none';
 srch.addEventListener('click', function() {
     if(flightNum.value === '') {
         error.innerText = 'Please enter a valid flight number';
+        return;
     }
     else {
-        const API_URL2 = `https://api.aviationstack.com/v1/flights?access_key=2fb03d59de8fab114e87f2b6b7b5616a&flight_iata=${flightNum.value.trim()}&limit=1`;
+        const API_URL2 = `https://api.aviationstack.com/v1/flights?access_key=2608bd27490a99d6609100de0a81958f&flight_iata=${flightNum.value.trim()}&limit=1`;
         loader.hidden = false;
         flightDetails(API_URL2);
     }
@@ -55,53 +56,68 @@ async function flightDetails(API_URL) {
     try {
         let output = await fetch(API_URL);
         let response = await output.json();
-        console.log(response.data[0]);
+
+        loader.hidden = true;
+
+        if (response.error) {
+            error.innerText = response.error.message;
+            container.style.display = 'none';
+            return;
+        }
+
+        if (!response.data || response.data.length === 0) {
+            error.innerText = 'Enter valid flight number!';
+            container.style.display = 'none';
+            return;
+        }
+        const flight = response.data[0];
+        error.innerText = '';
         loader.hidden = true;
         container.style.display = 'flex';
-        serial.innerText = response.data[0].flight.icao;
-        airlineName.innerText = response.data[0].airline.name;
-        deptCode.innerText = response.data[0].departure.iata;
-        deptName.innerText = response.data[0].departure.airport.slice(0, 25) + '.';
-        arrCode.innerText = response.data[0].arrival.iata;
-        arrName.innerText = response.data[0].arrival.airport.slice(0, 25) + '.';
-        if (response.data[0].flight_status === 'scheduled') {
+        serial.innerText = flight.flight.icao;
+        airlineName.innerText = flight.airline.name;
+        deptCode.innerText = flight.departure.iata;
+        deptName.innerText = flight.departure.airport.slice(0, 25) + '.';
+        arrCode.innerText = flight.arrival.iata;
+        arrName.innerText = flight.arrival.airport.slice(0, 25) + '.';
+        if (flight.flight_status === 'scheduled') {
             flightStatus.style.backgroundColor = 'grey';
             airStat.innerText = 'Scheduled';
             statDesc.innerText = 'On Time';
         }
-        else if (response.data[0].flight_status === 'cancelled') {
+        else if (flight.flight_status === 'cancelled') {
             flightStatus.style.backgroundColor = 'red';
             airStat.innerText = 'Cancelled';
             statDesc.innerText = '';
         }
-        else if (response.data[0].flight_status === 'landed') {
+        else if (flight.flight_status === 'landed') {
             flightStatus.style.backgroundColor = 'green';
             airStat.innerText = 'Landed';
             statDesc.innerText = '';
         }
-        else if (response.data[0].flight_status === 'diverted') {
+        else if (flight.flight_status === 'diverted') {
             flightStatus.style.backgroundColor = 'orange';
             airStat.innerText = 'Diverted';
             statDesc.innerText = '';
         }
-        else if (response.data[0].flight_status === 'active') {
+        else if (flight.flight_status === 'active') {
             flightStatus.style.backgroundColor = 'green';
             airStat.innerText = 'Airborne';
             statDesc.innerText = 'On Time';
         }
-        airName.innerText = response.data[0].departure.airport;
-        icao.innerText = `IATA: ${response.data[0].departure.iata} ● ICAO: ${response.data[0].departure.icao}`;
-        airName2.innerText = response.data[0].arrival.airport;
-        icao2.innerText = `IATA: ${response.data[0].arrival.iata} ● ICAO: ${response.data[0].arrival.icao}`;
+        airName.innerText = flight.departure.airport;
+        icao.innerText = `IATA: ${flight.departure.iata} ● ICAO: ${flight.departure.icao}`;
+        airName2.innerText = flight.arrival.airport;
+        icao2.innerText = `IATA: ${flight.arrival.iata} ● ICAO: ${flight.arrival.icao}`;
 
 
 
 
-        if(response.data[0].departure.scheduled === null) {
+        if (flight.departure.scheduled === null) {
             schTime.innerText = 'Not Available';
         }
-        else{
-            const time1 = new Date(response.data[0].departure.scheduled.replace("+00:00", ""));
+        else {
+            const time1 = new Date(flight.departure.scheduled.replace("+00:00", ""));
             const formatted = time1.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -113,11 +129,11 @@ async function flightDetails(API_URL) {
             schTime.innerText = formatted;
         }
 
-        if(response.data[0].departure.estimated === null) {
+        if (flight.departure.estimated === null) {
             estTime.innerText = 'Not Available';
         }
-        else{
-            const time2 = new Date(response.data[0].departure.scheduled.replace("+00:00", ""));
+        else {
+            const time2 = new Date(flight.departure.scheduled.replace("+00:00", ""));
             const formatted = time2.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -131,11 +147,11 @@ async function flightDetails(API_URL) {
 
 
 
-        if(response.data[0].departure.actual === null) {
+        if (flight.departure.actual === null) {
             actTime.innerText = 'Not Available';
         }
         else {
-            const time3 = new Date(response.data[0].departure.scheduled.replace("+00:00", ""));
+            const time3 = new Date(flight.departure.scheduled.replace("+00:00", ""));
             const formatted = time3.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -147,11 +163,11 @@ async function flightDetails(API_URL) {
             actTime.innerText = formatted;
         }
 
-        if(response.data[0].departure.actual_runway === null) {
+        if (flight.departure.actual_runway === null) {
             runTime.innerText = 'Not Available';
         }
         else {
-            const time4 = new Date(response.data[0].departure.scheduled.replace("+00:00", ""));
+            const time4 = new Date(flight.departure.scheduled.replace("+00:00", ""));
             const formatted = time4.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -163,26 +179,26 @@ async function flightDetails(API_URL) {
             runTime.innerText = formatted;
         }
 
-        if(response.data[0].departure.terminal === null) {
+        if (flight.departure.terminal === null) {
             term.innerText = 'Terminal: Not Available';
         }
         else {
-            term.innerText = `Terminal: ${response.data[0].departure.terminal}`;
+            term.innerText = `Terminal: ${flight.departure.terminal}`;
         }
 
-        if(response.data[0].departure.gate === null) {
+        if (flight.departure.gate === null) {
             gate.innerText = 'Gate: Not Available';
         }
         else {
-            gate.innerText = `Gate: ${response.data[0].departure.gate}`;
+            gate.innerText = `Gate: ${flight.departure.gate}`;
         }
 
 
-        if(response.data[0].arrival.scheduled === null) {
+        if (flight.arrival.scheduled === null) {
             schTime2.innerText = 'Not Available';
         }
-        else{
-            const time5 = new Date(response.data[0].arrival.scheduled.replace("+00:00", ""));
+        else {
+            const time5 = new Date(flight.arrival.scheduled.replace("+00:00", ""));
             const formatted = time5.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -194,11 +210,11 @@ async function flightDetails(API_URL) {
             schTime2.innerText = formatted;
         }
 
-        if(response.data[0].arrival.estimated === null) {
+        if (flight.arrival.estimated === null) {
             estTime2.innerText = 'Not Available';
         }
-        else{
-            const time6 = new Date(response.data[0].arrival.scheduled.replace("+00:00", ""));
+        else {
+            const time6 = new Date(flight.arrival.scheduled.replace("+00:00", ""));
             const formatted = time6.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -207,14 +223,14 @@ async function flightDetails(API_URL) {
                 minute: "2-digit",
                 hour12: false
             });
-            estTime2.innerText = formatted
+            estTime2.innerText = formatted;
         }
-        
-        if(response.data[0].arrival.actual === null) {
+
+        if (flight.arrival.actual === null) {
             actTime2.innerText = 'Not Available';
         }
         else {
-            const time7 = new Date(response.data[0].arrival.scheduled.replace("+00:00", ""));
+            const time7 = new Date(flight.arrival.scheduled.replace("+00:00", ""));
             const formatted = time7.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -226,11 +242,11 @@ async function flightDetails(API_URL) {
             actTime2.innerText = formatted;
         }
 
-        if(response.data[0].arrival.actual_runway === null) {
+        if (flight.arrival.actual_runway === null) {
             runTime2.innerText = 'Not Available';
         }
         else {
-            const time8 = new Date(response.data[0].arrival.scheduled.replace("+00:00", ""));
+            const time8 = new Date(flight.arrival.scheduled.replace("+00:00", ""));
             const formatted = time8.toLocaleString("en-IN", {
                 day: "2-digit",
                 month: "short",
@@ -242,35 +258,38 @@ async function flightDetails(API_URL) {
             runTime2.innerText = formatted;
         }
 
-        if(response.data[0].arrival.terminal === null) {
+        if (flight.arrival.terminal === null) {
             term2.innerText = 'Terminal: Not Available';
         }
         else {
-            term2.innerText = `Terminal: ${response.data[0].arrival.terminal}`;
+            term2.innerText = `Terminal: ${flight.arrival.terminal}`;
         }
 
-        if(response.data[0].arrival.gate === null) {
+        if (flight.arrival.gate === null) {
             gate2.innerText = 'Gate: Not Available';
         }
         else {
-            gate2.innerText = `Gate: ${response.data[0].arrival.gate}`;
+            gate2.innerText = `Gate: ${flight.arrival.gate}`;
         }
 
-        departTimeZone.innerText = `Departure Timezone: ${response.data[0].departure.timezone}`;
-        arrTimeZone.innerText = ` ● Arrival Timezone: ${response.data[0].arrival.timezone}`;
+        departTimeZone.innerText = `Departure Timezone: ${flight.departure.timezone}`;
+        arrTimeZone.innerText = ` ● Arrival Timezone: ${flight.arrival.timezone}`;
 
-        currentFlight = response.data[0];
+        currentFlight = flight;
 
-        if(currentFlight.live !== null) {
+        if (currentFlight.live !== null) {
             mapShow.hidden = false;
         } else {
             mapShow.hidden = true;
         }
 
 
+        
     }
     catch(e) {
-        error = e.message;
+        loader.hidden = true;
+        error.innerText = 'Network error. Please try again.';
+        container.style.display = 'none';
     }
 }
 
