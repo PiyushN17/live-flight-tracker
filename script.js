@@ -42,7 +42,7 @@ container.style.display = 'none';
 
 srch.addEventListener('click', function() {
     if(flightNum.value === '') {
-        error.innerText = 'Enter a Valid Flight Number';
+        error.innerText = 'Enter a Valid Flight Number!';
         return;
     }
     else {
@@ -309,4 +309,5 @@ function showMap(lat, lng) {
     L.marker([lat, lng]).addTo(leafletMap);
 
 }
+
 
