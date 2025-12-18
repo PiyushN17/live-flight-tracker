@@ -302,6 +302,13 @@ mapShow.addEventListener('click', function() {
     showMap(currentFlight.live.latitude, currentFlight.live.longitude);
 });
 
+const airplaneIcon = L.icon({
+    iconUrl: 'plane.png', 
+    iconSize: [40, 40],     
+    iconAnchor: [20, 20],   
+    popupAnchor: [0, -20]    
+});
+
 
 function showMap(lat, lng) {
     map.hidden = false;
@@ -310,6 +317,11 @@ function showMap(lat, lng) {
         attribution: '© OpenStreetMap contributors'
     }).addTo(leafletMap);
 
-    L.marker([lat, lng]).addTo(leafletMap);
+    L.marker([lat, lng], { icon: airplaneIcon })
+      .addTo(leafletMap)
+      .bindPopup("Aircraft Position")
+      .openPopup();
+
 
 }
+
